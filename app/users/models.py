@@ -1,27 +1,19 @@
-from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, func, DateTime
+from app.database import Base
+from sqlalchemy.orm import relationship
 
 
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
-    password_hash = Column(String)
-    is_active = Column(Boolean)
+    name = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+    photo = Column(String, nullable=True)
+    verified = Column(Boolean, nullable=False, server_default='False')
+    verification_code = Column(String, nullable=True, unique=True)
+    role = Column(String, server_default='user', nullable=False)
+    created_at = Column(DateTime, default=func.utcnow())
+    updated_at = Column(DateTime, default=func.utcnow())
 
-
-class Teacher(User):
-    __tablename__ = "teachers"
-
-    id = Column(Integer, primary_key=True, index=True)
-    # Дополнительные поля для учителей
-
-
-class Student(User):
-    __tablename__ = "students"
-
-    id = Column(Integer, primary_key=True, index=True)

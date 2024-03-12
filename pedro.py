@@ -1,5 +1,1 @@
-a = 5
-b = "5"
-c = [1, 2, 3]
-
-print(k)
+print("postgresql://%(DB_USER)s:%(DB_PASSWORD)s@%(DB_HOST)s:%(DB_PORT)s/%(DB_NAME)s")
